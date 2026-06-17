@@ -1,0 +1,27 @@
+import static io.restassured.RestAssured.*;
+import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+package com.test;
+public class getDemo {
+
+    @Test
+    public void testGet() {
+
+        Response response = given()
+                .when()
+                .get("https://jsonplaceholder.typicode.com/posts/1/comments");
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+
+        Assert.assertEquals(
+                response.jsonPath().getInt("[0].postId"),
+                1
+        );
+
+        Assert.assertEquals(
+                response.jsonPath().getString("[0].email"),
+                "Eliseo@gardner.biz"
+        );
+    }
+}

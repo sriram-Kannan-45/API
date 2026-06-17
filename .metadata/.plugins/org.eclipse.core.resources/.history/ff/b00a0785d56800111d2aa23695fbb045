@@ -1,0 +1,35 @@
+package com.test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+public class LoginTest {
+
+    @Test
+    public void loginTest() {
+
+        RestAssured.baseURI = "YOUR_BACKEND_URL";
+
+        String payload = """
+        {
+            "email":"admin@gmail.com",
+            "password":"Admin@123"
+        }
+        """;
+
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+                .when()
+                .post("/api/auth/login");
+
+        System.out.println(response.asPrettyString());
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+    }
+}

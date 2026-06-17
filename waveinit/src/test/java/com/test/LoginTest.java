@@ -1,0 +1,49 @@
+package com.test;
+
+import static io.restassured.RestAssured.*;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+public class LoginTest {
+
+    @Test
+    public void loginTest() {
+
+        RestAssured.baseURI = "http://localhost:3001";
+
+        String payload = """
+        {
+            "email": "admin@test.com",
+            "password": "admin123"
+        }
+        """;
+
+        Response response =
+                given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+                .when()
+                .post("/api/auth/login");
+
+        response.prettyPrint();
+
+        Assert.assertEquals(response.getStatusCode(), 200);
+
+        Assert.assertEquals(response.jsonPath().getString("email"), "admin@test.com");
+        Assert.assertEquals(response.jsonPath().getString("role"), "ADMIN");
+        Assert.assertEquals(response.jsonPath().getString("name"), "Admin");
+
+        String token = response.jsonPath().getString("token");
+        Assert.assertNotNull(token);
+        Assert.assertFalse(token.isEmpty());
+
+        System.out.println("JWT Token: " + token);
+
+        System.out.println("Login API Test Passed");
+    }
+}

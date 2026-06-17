@@ -1,0 +1,28 @@
+package com.test;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class GetUserTest {
+  @Test
+  public void f() 
+  
+  {
+	  
+	  Response responce = RestAssured.given().when().get("https://jsonplaceholder.typicode.com/users/12");
+	  
+	  System.out.println(responce.getStatusCode());
+	  
+	  responce.prettyPrint();
+	  
+	  Assert.assertEquals(responce.getStatusCode(), 200);
+	  
+	  String name = responce.jsonPath().getString("name");
+	  
+	  Assert.assertEquals(name, "Lenne Graham");
+	  
+  }
+}

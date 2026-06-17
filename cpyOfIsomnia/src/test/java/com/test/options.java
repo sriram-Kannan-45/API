@@ -1,0 +1,23 @@
+package com.test;
+
+import org.testng.annotations.Test;
+import io.restassured.response.Response;
+
+import static io.restassured.RestAssured.*;
+
+public class options {
+
+    
+    @Test
+    public void testOptionsRequest() {
+
+        Response response = given()
+                .when()
+                .options("http://localhost:3001/api/auth/login");
+
+        System.out.println("Status Code: " + response.getStatusCode());
+
+        response.getHeaders().forEach(header ->
+                System.out.println(header.getName() + " : " + header.getValue()));
+    }
+}

@@ -1,0 +1,15 @@
+package com.test;
+
+import org.testng.annotations.Test;
+
+import io.restassured.response.Response;
+import static io.restassured.RestAssured.*;
+public class delete {
+  @Test
+  public void f() 
+  {
+	  	
+		Response response = given().get("https://jsonplaceholder.typicode.com/posts/1");
+		System.out.println("Status Code: " + response.getStatusCode());
+  }
+}

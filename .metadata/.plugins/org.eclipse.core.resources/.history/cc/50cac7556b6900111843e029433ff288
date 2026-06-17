@@ -1,0 +1,32 @@
+package com.test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.testng.annotations.Test;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import static  io.restassured.RestAssured.*;
+
+public class LoginTest {
+  @Test
+  public void f() 
+  
+  {
+	    Map<String, String> loginPayload = new HashMap<>();
+	    
+	    baseURI = "https://lms-backent.onrender.com";
+	    
+	    loginPayload.put("username","admin");
+        loginPayload.put("password","admin123");
+	    
+	    Response res = given()
+	    		       .contentType(ContentType.JSON)
+	    		       .body(loginPayload)
+	    		       .when().post("/login");
+	    
+	    System.out.print(res.prettyPrint());
+  }
+}

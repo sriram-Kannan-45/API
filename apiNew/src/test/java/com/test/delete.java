@@ -1,0 +1,35 @@
+package com.test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+
+import io.restassured.response.Response;
+
+public class delete {
+
+    @Test
+    public void f() {
+
+        
+        Response response = given()
+                .when()
+                .get("https://jsonplaceholder.typicode.com/posts/1");
+
+        System.out.println("GET Status Code: " + response.getStatusCode());
+        System.out.println("GET Response Body: " + response.getBody().asString());
+
+        
+        Response response1 = given()
+                .when()
+                .delete("https://jsonplaceholder.typicode.com/posts/1");
+
+        System.out.println("DELETE Status Code: " + response1.getStatusCode());
+        System.out.println("DELETE Response Body: " + response1.getBody().asString());
+        
+       
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response1.getStatusCode(), 200);
+        
+    }
+}

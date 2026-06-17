@@ -1,0 +1,15 @@
+package com.test;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+public class CreateTrainee {
+	
+  
+  @Test
+  public void f() 
+  
+  {
+	  
+	   baseURI = "http://localhost:3000";
+  }
+}

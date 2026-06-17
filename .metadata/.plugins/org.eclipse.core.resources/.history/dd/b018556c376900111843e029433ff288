@@ -1,0 +1,57 @@
+package com.test;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+public class LoginTest {
+
+    @Test
+    public void loginTest() {
+
+        // Base URI
+        RestAssured.baseURI = "https://lms-backent.onrender.com";
+
+        // Request Body
+        String payload = """
+        {
+            "email": "admin@test.com",
+            "password": "admin123"
+        }
+        """;
+
+        // Send POST Request
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+        .when()
+                .post("/api/auth/login")
+        .then()
+                .statusCode(200)
+                .body("email", equalTo("admin@test.com"))
+                .body("role", equalTo("ADMIN"))
+                .body("name", equalTo("Admin"))
+                .extract()
+                .response();
+
+        // Print Response
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Time: " + response.getTime() + " ms");
+        response.prettyPrint();
+
+        // Extract and Validate Token
+        String token = response.jsonPath().getString("token");
+
+        Assert.assertNotNull(token, "Token should not be null");
+        Assert.assertFalse(token.isEmpty(), "Token should not be empty");
+
+        System.out.println("JWT Token: " + token);
+        System.out.println("Login API Test Passed Successfully");
+    }
+}

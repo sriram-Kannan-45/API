@@ -1,0 +1,32 @@
+package com.test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import static io.restassured.RestAssured.*;
+
+public class putdemo {
+  @Test
+  public void f() 
+  {
+	  
+	  String requestBody = """
+		        {
+	          "id": 1,
+	          "title": "Updated Title",
+	          "body": "Updated Body",
+	          "userId": 1
+	        }
+	        """;
+	  
+	  Response response = given().contentType(ContentType.JSON).body(requestBody).
+      when().put("https://jsonplaceholder.typicode.com/posts/1") ;
+      
+      Assert.assertEquals(response.getStatusCode(), 200);
+      System.out.println("Status Code: " + response.getStatusCode());
+      
+  }
+}

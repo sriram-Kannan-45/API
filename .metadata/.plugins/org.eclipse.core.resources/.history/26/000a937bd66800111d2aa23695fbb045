@@ -1,0 +1,42 @@
+package com.test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+public class LoginTest {
+
+    @Test
+    public void loginTest() {
+
+       
+        RestAssured.baseURI = "https://lms-backend.onrender.com";
+
+       
+        String payload = """
+        {
+            "email": "admin@gmail.com",
+            "password": "Admin@123"
+        }
+        """;
+
+        
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+                .when()
+                .post("/api/auth/login");
+
+        
+        System.out.println("Status Code : " + response.getStatusCode());
+        System.out.println("Response Body : ");
+        response.prettyPrint();
+
+       
+        Assert.assertEquals(response.getStatusCode(), 200, "Login failed!");
+    }
+}

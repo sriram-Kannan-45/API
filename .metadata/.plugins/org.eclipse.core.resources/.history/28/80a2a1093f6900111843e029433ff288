@@ -1,0 +1,14 @@
+package com.test;
+
+import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.*;
+
+public class putdemo {
+  @Test
+  public void f() 
+  {
+	  
+	  
+  }
+}
