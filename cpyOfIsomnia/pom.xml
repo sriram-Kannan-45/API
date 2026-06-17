@@ -3,7 +3,10 @@
   <groupId>cpyOfIsomnia</groupId>
   <artifactId>cpyOfIsomnia</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+</properties>
   <dependencies>
 		<!-- Source:
 		https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
