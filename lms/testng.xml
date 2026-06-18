@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="LMS API Suite" parallel="false">
+
+    <listeners>
+
+        <!-- Extent Report Listener -->
+        <listener class-name="com.utilAndData.ExtentListener"/>
+
+        <!-- Allure Report Listener -->
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+
+    </listeners>
+
+    <test name="API Test Cases" thread-count="5">
+
+        <classes>
+        	<class name="com.test.CreateNote"></class>
+        	<class name ="com.test.getAllCourse"/>
+        	
+        	<class name="com.test.getAllRole"/>
+			<class name="com.test.getAllInstitutions"/>
+			
+            <class name="com.test.healthCheck"/>
+
+            <class name="com.test.AdminLogin"/>
+
+        </classes>
+
+    </test>
+
+</suite>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="RefactoringWizard.Convert from JUnit">
-		<item key="width" value="600"/>
-		<item key="height" value="400"/>
+		<item key="width" value="601"/>
+		<item key="height" value="430"/>
 	</section>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item key="moveWizard.updateQualifiedNames" value="false"/>

@@ -1,0 +1,329 @@
+openapi: 3.0.3
+
+info:
+  title: Student Management API
+  version: 1.0.0
+  description: Complete CRUD API for learning REST API Testing.
+
+servers:
+  - url: https://jsonplaceholder.typicode.com
+
+tags:
+  - name: Students
+  - name: Authentication
+
+paths:
+
+  /users:
+    get:
+      tags:
+        - Students
+      summary: Get all students
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success
+
+    post:
+      tags:
+        - Students
+      summary: Create Student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+
+      responses:
+        "201":
+          description: Student Created
+
+  /users/{id}:
+
+    get:
+      tags:
+        - Students
+      summary: Get Student by ID
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Success
+
+    put:
+      tags:
+        - Students
+      summary: Replace Student
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+
+      responses:
+        "200":
+          description: Updated Successfully
+
+    patch:
+      tags:
+        - Students
+      summary: Update Student Partially
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+
+      responses:
+        "200":
+          description: Updated
+
+    delete:
+      tags:
+        - Students
+      summary: Delete Student
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Deleted Successfully
+
+    options:
+      tags:
+        - Students
+      summary: Supported Methods
+      responses:
+        "204":
+          description: No Content
+
+    head:
+      tags:
+        - Students
+      summary: Get Headers Only
+      responses:
+        "200":
+          description: OK
+
+  /posts:
+    get:
+      tags:
+        - Students
+      summary: Get Posts
+      responses:
+        "200":
+          description: Success
+
+    post:
+      tags:
+        - Students
+      summary: Create Post
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                userId:
+                  type: integer
+
+      responses:
+        "201":
+          description: Created
+
+  /posts/{id}:
+
+    get:
+      tags:
+        - Students
+      summary: Get Post by ID
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Success
+
+    put:
+      tags:
+        - Students
+      summary: Update Entire Post
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                userId:
+                  type: integer
+
+      responses:
+        "200":
+          description: Updated
+
+    patch:
+      tags:
+        - Students
+      summary: Partial Update
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+
+      responses:
+        "200":
+          description: Updated
+
+    delete:
+      tags:
+        - Students
+      summary: Delete Post
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Deleted
+
+  /comments:
+
+    get:
+      tags:
+        - Students
+      summary: Search Comments
+
+      parameters:
+        - name: postId
+          in: query
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Success
+
+  /login:
+
+    post:
+      tags:
+        - Authentication
+      summary: Login User
+
+      requestBody:
+        required: true
+
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+      responses:
+        "200":
+          description: Login Success
+
+components:
+
+  securitySchemes:
+
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
