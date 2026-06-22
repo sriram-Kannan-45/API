@@ -25,6 +25,8 @@
             <class name="com.test.healthCheck"/>
 
             <class name="com.test.AdminLogin"/>
+            
+            <class name="com.test.getAllNotes"></class>
 
         </classes>
 

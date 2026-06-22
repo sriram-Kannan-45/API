@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.test.getAllCourse">
+      <class name="com.test.getAllNotes">
         <methods>
-          <include name="getALLcourse"/>
+          <include name="getAllNotesWithBlankOptions" invocation-numbers="0"/>
         </methods>
-      </class> <!-- com.test.getAllCourse -->
+      </class> <!-- com.test.getAllNotes -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -1,5 +1,6 @@
 package com.utilAndData;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -11,81 +12,114 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.DataProvider;
 
 public class excelReader {
-	
-    @DataProvider(name = "invalidEmail")
-    public Object[][] invalidEmail() throws IOException {
-        return getExcelData(
-                "src/test/resources/data.xlsx",
-                "Sheet1");
-    }
-    
-    @DataProvider(name = "invalidPassword")
-    public Object[][] invalidPassword() throws IOException {
-        return getExcelData(
-                "src/test/resources/data.xlsx",
-                "Sheet2");
-    }
-    @DataProvider(name = "withoutdata")
-    public Object[][] withoutdata() throws IOException {
-        return getExcelData(
-                "src/test/resources/data.xlsx",
-                "Sheet3");
-    }
-    
-    private Object[][] getExcelData(String file, String sheet) {
+	@DataProvider(name = "invalidEmail")
+	public Object[][] invalidEmail() throws IOException {
 
-        String[][] data = null;
+	    return getExcelData(
+	            "src/test/resources/data.xlsx",
+	            "Sheet1");
+	}
 
-        try {
+	@DataProvider(name = "invalidPassword")
+	public Object[][] invalidPassword() throws IOException {
 
-            FileInputStream files =
-                    new FileInputStream(file);
+	    return getExcelData(
+	            "src/test/resources/data.xlsx",
+	            "Sheet2");
+	}
 
-            XSSFWorkbook work =
-                    new XSSFWorkbook(files);
+	@DataProvider(name = "withoutdata")
+	public Object[][] withoutdata() throws IOException {
 
-            XSSFSheet sheets =
-                    work.getSheet(sheet);
+	    return getExcelData(
+	            "src/test/resources/data.xlsx",
+	            "Sheet3");
+	}
 
-            XSSFRow row =
-                    sheets.getRow(0);
+	@DataProvider(name = "getAllNotes")
+	public Object[][] getAllNotes() throws IOException {
 
-            int noOfRows =
-                    sheets.getPhysicalNumberOfRows();
+	    return getExcelData(
+	            "src/test/resources/data.xlsx",
+	            "Sheet4");
+	}
 
-            int noOfCols =
-                    row.getLastCellNum();
+	@DataProvider(name = "blankOptions")
+	public Object[][] blankOptions() throws IOException {
 
-            data =
-                    new String[noOfRows - 1][noOfCols];
+	    return getExcelData(
+	            "src/test/resources/data.xlsx",
+	            "Sheet5");
+	}
 
-            DataFormatter formatter =
-                    new DataFormatter();
+	@SuppressWarnings("resource")
+	private Object[][] getExcelData(String filePath, String sheetName) {
 
-            for (int i = 1; i < noOfRows; i++) {
+		Object[][] data = null;
 
-                row = sheets.getRow(i);
+		try {
 
-                for (int j = 0; j < noOfCols; j++) {
+			System.out.println("File Path : " + new File(filePath).getAbsolutePath());
 
-                    Cell cell = row.getCell(j);
+			FileInputStream fis = new FileInputStream(filePath);
 
-                    data[i - 1][j] =
-                            formatter.formatCellValue(cell);
-                }
-            }
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-            work.close();
+			System.out.println("Available Sheets:");
 
-            files.close();
+			for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
 
-        } catch (Exception e) {
+				System.out.println(workbook.getSheetName(i));
+			}
 
-            System.out.println(
-                    "The exception is : "
-                            + e.getMessage());
-        }
+			XSSFSheet sheet = workbook.getSheet(sheetName);
 
-        return data;
-    }
+			if (sheet == null) {
+
+				throw new RuntimeException("Sheet not found : " + sheetName);
+			}
+
+			int rows = sheet.getPhysicalNumberOfRows();
+
+			XSSFRow headerRow = sheet.getRow(0);
+
+			int cols = headerRow.getLastCellNum();
+
+			data = new Object[rows - 1][cols];
+
+			DataFormatter formatter = new DataFormatter();
+
+			for (int i = 1; i < rows; i++) {
+
+				XSSFRow row = sheet.getRow(i);
+
+				if (row == null) {
+
+					for (int j = 0; j < cols; j++) {
+
+						data[i - 1][j] = "";
+					}
+
+					continue;
+				}
+
+				for (int j = 0; j < cols; j++) {
+
+					Cell cell = row.getCell(j);
+
+					data[i - 1][j] = cell == null ? "" : formatter.formatCellValue(cell);
+				}
+			}
+
+			workbook.close();
+			fis.close();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return data;
+	}
+
 }
